@@ -1,0 +1,126 @@
+/* 벌써아침 공용 스타일 — 아침 햇살 톤 */
+:root{
+  --bg:#fdfcfa;
+  --ink:#2b2b33;
+  --deep:#1a1226;
+  --sun:#e8833a;
+  --sun-soft:#f5a623;
+  --dawn1:#c9b8e8; /* 새벽 라벤더 */
+  --dawn2:#ffd9a0; /* 살구 */
+  --dawn3:#ffb17a; /* 아침 오렌지 */
+  --muted:#777;
+  --line:#e9e4dd;
+  --card:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Segoe UI",sans-serif;
+  line-height:1.7;
+  color:var(--ink);
+  background:var(--bg);
+  word-break:keep-all;
+}
+img{max-width:100%;display:block}
+a{color:var(--sun);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* 헤더 */
+.site-header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(253,252,250,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.site-header .container{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-weight:800;font-size:1.15rem;color:var(--deep);letter-spacing:-.02em}
+.logo:hover{text-decoration:none}
+.logo .sun{color:var(--sun)}
+.site-nav{display:flex;gap:20px;font-size:.95rem}
+.site-nav a{color:var(--ink)}
+.site-nav a.active{color:var(--sun);font-weight:700}
+
+/* 히어로 */
+.hero{
+  background:linear-gradient(160deg,var(--dawn1) 0%,var(--dawn2) 55%,var(--dawn3) 100%);
+  color:var(--deep);
+  overflow:hidden;
+}
+.hero .container{
+  display:flex;align-items:center;gap:32px;
+  padding-top:64px;padding-bottom:64px;
+}
+.hero-text{flex:1}
+.hero h1{font-size:2.3rem;line-height:1.3;margin:0 0 16px;letter-spacing:-.02em}
+.hero p{font-size:1.1rem;margin:0 0 24px;opacity:.85}
+.hero-art{flex:0 0 260px}
+.hero-art img{filter:drop-shadow(0 12px 24px rgba(26,18,38,.25))}
+
+/* 페이지 히어로(서브페이지 상단) */
+.page-hero{
+  background:linear-gradient(160deg,var(--dawn1),var(--dawn2));
+  padding:48px 0;
+}
+.page-hero h1{margin:0 0 8px;font-size:1.9rem;color:var(--deep)}
+.page-hero p{margin:0;opacity:.8}
+
+/* 버튼·배지 */
+.btn{
+  display:inline-block;padding:10px 22px;border-radius:999px;
+  background:var(--deep);color:#fff;font-weight:700;font-size:.95rem;
+}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.ghost{background:transparent;border:2px solid var(--deep);color:var(--deep)}
+.badge{
+  display:inline-block;padding:2px 12px;border-radius:999px;
+  font-size:.8rem;font-weight:700;
+  background:#fff3e4;color:#b45f17;border:1px solid #f3ce9f;
+  vertical-align:middle;
+}
+
+/* 섹션 */
+.section{padding:56px 0}
+.section h2{font-size:1.5rem;color:var(--deep);margin:0 0 24px;letter-spacing:-.01em}
+.section h3{font-size:1.15rem;color:var(--deep);margin:2em 0 .6em}
+.section.alt{background:#faf6f0}
+.lead{font-size:1.05rem}
+.muted{color:var(--muted);font-size:.92rem}
+
+/* 카드 */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:24px;transition:transform .15s,box-shadow .15s;
+}
+a.card{color:var(--ink)}
+a.card:hover{text-decoration:none;transform:translateY(-3px);box-shadow:0 10px 28px rgba(26,18,38,.08)}
+.card .thumb{border-radius:8px;margin-bottom:16px;border:1px solid var(--line)}
+.card h3{margin:0 0 8px;font-size:1.15rem;color:var(--deep)}
+.card p{margin:0;font-size:.95rem;color:#55505c}
+.card .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--sun)}
+
+/* 스크린샷 그리드 */
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:20px 0}
+.shots figure{margin:0}
+.shots img{border-radius:10px;border:1px solid var(--line);width:100%}
+.shots figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:6px}
+
+/* 푸터 */
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:32px 0 48px;margin-top:40px;
+  color:var(--muted);font-size:.9rem;
+}
+.site-footer .container{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between}
+.site-footer nav{display:flex;gap:16px}
+.site-footer a{color:var(--muted)}
+
+/* 반응형 */
+@media (max-width:720px){
+  .hero .container{flex-direction:column-reverse;text-align:center;padding-top:44px;padding-bottom:44px}
+  .hero h1{font-size:1.7rem}
+  .hero-art{flex-basis:auto;width:200px}
+  .site-nav{gap:14px;font-size:.9rem}
+  .site-footer .container{flex-direction:column;align-items:flex-start}
+}
