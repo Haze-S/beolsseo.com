@@ -179,6 +179,7 @@ a.card:hover{text-decoration:none;transform:translateY(-4px);box-shadow:0 14px 3
 .hero-game h1{font-size:2.6rem;margin:0 0 14px;color:#ffd9a0;line-height:1.25}
 .hero-game p{font-size:1.05rem;margin:14px 0 24px;color:#d9cfe8;max-width:34em}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.store-note{font-size:.88rem;color:#b9a8d6;margin:14px 0 0;letter-spacing:.02em}
 .hero-game .hero-art{flex:0 0 300px}
 .hero-game .hero-art img{
   border-radius:18px;
