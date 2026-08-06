@@ -119,6 +119,8 @@ section{scroll-margin-top:70px}
 .feature .container{display:flex;align-items:center;gap:48px}
 .feature.flip .container{flex-direction:row-reverse}
 .feature-art{flex:0 0 46%;min-width:0}
+.feature-art.phone{flex:0 0 300px;display:flex;justify-content:center}
+.feature-art.phone img{max-width:280px;border-radius:22px}
 .feature-art img{
   width:100%;border-radius:16px;
   box-shadow:0 18px 40px rgba(26,18,38,.35);
@@ -191,6 +193,8 @@ a.card:hover{text-decoration:none;transform:translateY(-4px);box-shadow:0 14px 3
 }
 .shots figure:hover img{transform:translateY(-4px) rotate(-.5deg);box-shadow:0 12px 26px rgba(26,18,38,.18)}
 .shots figcaption{font-size:.85rem;color:var(--muted);text-align:center;margin-top:8px}
+.shots.phone{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:760px}
+.shots.phone img{border-radius:18px}
 
 /* 문의 밴드 — 마스코트 + 그라데이션 */
 .contact-band{
