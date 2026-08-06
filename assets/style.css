@@ -165,6 +165,33 @@ a.card:hover{text-decoration:none;transform:translateY(-4px);box-shadow:0 14px 3
 .card p{margin:0;font-size:.95rem;color:#55505c}
 .card .more{display:inline-block;margin-top:14px;font-weight:700;color:var(--sun)}
 
+/* 게임 히어로(포털 메인 — 피처드 게임) */
+.hero-game{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 90% at 85% 100%, rgba(255,177,122,.22) 0%, transparent 70%),
+    linear-gradient(150deg,var(--night) 0%,#3a2a55 100%);
+  color:#efe8f8;
+}
+.hero-game .container{display:flex;align-items:center;gap:44px;padding-top:72px;padding-bottom:104px}
+.hero-game .eyebrow{background:rgba(255,217,160,.14);color:#ffd9a0}
+.hero-logo{width:300px;height:auto;margin:6px 0 4px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+.hero-game h1{font-size:2.6rem;margin:0 0 14px;color:#ffd9a0;line-height:1.25}
+.hero-game p{font-size:1.05rem;margin:14px 0 24px;color:#d9cfe8;max-width:34em}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero-game .hero-art{flex:0 0 300px}
+.hero-game .hero-art img{
+  border-radius:18px;
+  box-shadow:0 20px 44px rgba(0,0,0,.45);
+  transform:rotate(1.5deg);
+  animation:float 6s ease-in-out infinite;
+}
+
+/* 게임 카드 그리드 — 16:9 키비주얼 */
+.game-grid .thumb{aspect-ratio:16/9;width:100%;object-fit:cover}
+.game-grid .meta-line{font-size:.85rem;color:var(--muted);margin:0 0 8px}
+.game-grid h3 .badge{font-size:.72rem}
+
 /* 페이지 히어로(서브페이지 상단) */
 .page-hero{
   position:relative;overflow:hidden;

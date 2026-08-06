@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>벌써아침 — 게임과 플랫폼을 만드는 팀</title>
-<meta name="description" content="벌써아침은 던전 컴퍼니 시리즈와 캠페인 플랫폼 campaign-hub를 만드는 작은 팀입니다.">
+<title>벌써아침 — 던전 컴퍼니 시리즈</title>
+<meta name="description" content="벌써아침이 만드는 게임들 — 마왕성도 결국 회사다, 던전 컴퍼니 시리즈.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,8 +12,8 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="벌써아침">
-<meta property="og:title" content="벌써아침 — 게임과 플랫폼을 만드는 팀">
-<meta property="og:description" content="벌써아침은 던전 컴퍼니 시리즈와 캠페인 플랫폼 campaign-hub를 만드는 작은 팀입니다.">
+<meta property="og:title" content="벌써아침 — 던전 컴퍼니 시리즈">
+<meta property="og:description" content="벌써아침이 만드는 게임들 — 마왕성도 결국 회사다, 던전 컴퍼니 시리즈.">
 <meta property="og:url" content="https://beolsseo.com/">
 <meta property="og:image" content="https://beolsseo.com/assets/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -25,100 +25,90 @@
   <div class="container">
     <a class="logo" href="index.html"><span class="sun">☀</span> 벌써아침</a>
     <nav class="site-nav">
+      <a href="#games">게임</a>
       <a href="dungeon.html">던전 컴퍼니</a>
-      <a href="campaign.html">campaign-hub</a>
-      <a href="#about">팀</a>
       <a href="#contact">문의</a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
+<section class="hero-game">
   <div class="container">
     <div class="hero-text">
-      <span class="eyebrow">Game &amp; Platform Studio</span>
-      <h1>밤새 던전을 지켰더니,<br><span class="accent">벌써 아침.</span></h1>
-      <p>벌써아침은 마감 직전의 밤과 그 끝에 오는 아침을 좋아하는 작은 팀입니다.<br>
-      게임과 웹 플랫폼을 만듭니다.</p>
-      <a class="btn" href="#projects">만들고 있는 것들</a>
+      <span class="eyebrow">벌써아침의 게임</span>
+      <img class="hero-logo" src="assets/img/dc-logo-light.webp" alt="던전 컴퍼니" width="340" height="227">
+      <h1>마왕성 키우기</h1>
+      <div class="chips">
+        <span class="chip dark">방치형 경영 RPG</span>
+        <span class="chip dark">모바일</span>
+        <span class="chip dark">개발 중</span>
+      </div>
+      <p>마왕성도 결국 회사다. 간부를 채용하고 몬스터 직원을 키우며
+      세계정복(KPI)을 달성하는 방치형 RPG — 잠든 사이에도 마왕성은 돌아갑니다.</p>
+      <div class="hero-cta">
+        <a class="btn sun" href="dungeon.html#kiwoogi">게임 살펴보기</a>
+        <a class="btn light" href="#contact">출시 소식 받기</a>
+      </div>
     </div>
     <div class="hero-art">
-      <img src="assets/img/maou_desk.webp" alt="책상에서 야근 중인 마왕" width="300" height="300">
+      <img src="assets/img/dc-scene1.webp" alt="퇴근하려는 순간 결재가 쏟아지는 마왕" width="300" height="450">
     </div>
   </div>
   <div class="wave" aria-hidden="true"></div>
 </section>
 
-<section class="section" id="projects" style="padding-bottom:0">
+<section class="section" id="games">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Projects</span>
-      <h2>만들고 있는 것들</h2>
-      <p>게임 하나, 그 게임을 세상에 알릴 플랫폼 하나.</p>
+      <span class="eyebrow">Games</span>
+      <h2>게임</h2>
+      <p>하나의 세계관, 던전 컴퍼니 시리즈.</p>
+    </div>
+    <div class="card-grid game-grid">
+      <a class="card" href="dungeon.html#kiwoogi">
+        <img class="thumb" src="assets/img/card-kiwoogi.webp" alt="던전 컴퍼니: 마왕성 키우기">
+        <h3>마왕성 키우기 <span class="badge">개발 중</span></h3>
+        <p class="meta-line">방치형 경영 RPG · 모바일</p>
+        <p>마왕님은 퇴근하고 싶어. 마왕성이라는 회사를 경영하는 본편.</p>
+        <span class="more">자세히 →</span>
+      </a>
+      <a class="card" href="dungeon.html#overtime">
+        <img class="thumb" src="assets/img/title.webp" alt="던전 컴퍼니: 마왕님 야근 사수">
+        <h3>마왕님 야근 사수 <span class="badge">개발 중</span></h3>
+        <p class="meta-line">아레나 서바이버 · PC(Windows)</p>
+        <p>몰려드는 결재 요청을 버티고 18:00 정시 퇴근하는 스핀오프.</p>
+        <span class="more">자세히 →</span>
+      </a>
+      <!-- 새 게임 카드 템플릿:
+      <a class="card" href="게임상세.html">
+        <img class="thumb" src="assets/img/카드썸네일(16:9).webp" alt="게임명">
+        <h3>게임명 <span class="badge">상태</span></h3>
+        <p class="meta-line">장르 · 플랫폼</p>
+        <p>한 줄 설명.</p>
+        <span class="more">자세히 →</span>
+      </a> -->
     </div>
   </div>
 </section>
 
-<section class="feature night">
-  <div class="container">
-    <div class="feature-art phone">
-      <img src="assets/img/dc-title.webp" alt="던전 컴퍼니: 마왕성 키우기 타이틀 화면 — 마왕님은 퇴근하고 싶어">
-    </div>
-    <div class="feature-text">
-      <div class="chips">
-        <span class="chip dark">게임 시리즈</span>
-        <span class="chip dark">모바일 방치형</span>
-        <span class="chip dark">개발 중</span>
-      </div>
-      <h3>던전 컴퍼니 시리즈</h3>
-      <p>마왕성도 결국 회사다. 야근과 결재에 시달리는 마왕님의 세계관을 공유하는
-      게임 시리즈 — 본편은 <strong>모바일 방치형 마왕성 경영 RPG 『마왕성 키우기』</strong>,
-      곁들여 데스크톱 아레나 서바이버 스핀오프 『마왕님 야근 사수』.</p>
-      <a class="btn sun" href="dungeon.html">시리즈 소개 →</a>
-    </div>
-  </div>
-</section>
-
-<section class="feature morning flip">
-  <div class="container">
-    <div class="feature-art">
-      <div class="stack" role="img" aria-label="사전예약, 쿠폰, 출석 이벤트 캠페인 카드가 겹쳐진 그림">
-        <div class="mini">📅 사전예약 캠페인<small>오픈 알림 · 참여 집계 대시보드</small></div>
-        <div class="mini">🎟️ 오픈 기념 쿠폰<small>발급 · 등록 · 소진 관리</small></div>
-        <div class="mini">📣 출석 이벤트<small>참여 조건과 보상 설정</small></div>
-      </div>
-    </div>
-    <div class="feature-text">
-      <div class="chips">
-        <span class="chip blue">웹 플랫폼</span>
-        <span class="chip">개발 중</span>
-      </div>
-      <h3>campaign-hub</h3>
-      <p>사전예약·쿠폰·이벤트를 캠페인 단위로 묶어 운영하는 마케팅 플랫폼.
-      캠페인마다 브랜드 테마를 갈아입혀 게임 런칭부터 일반 이벤트까지 재사용합니다.</p>
-      <a class="btn" href="campaign.html">플랫폼 소개 →</a>
-    </div>
-  </div>
-</section>
-
-<section class="section alt" id="about">
+<section class="section alt">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">About</span>
-      <h2>벌써아침은</h2>
+      <span class="eyebrow">Universe</span>
+      <h2>마왕성도 결국 회사다</h2>
     </div>
-    <p class="lead center">밤을 새워 무언가를 만들다 창밖이 밝아올 때의 "벌써 아침이네"라는 말에서 시작했습니다.<br>
-    직접 하고 싶은 게임을 만들고, 그 게임을 세상에 알리는 데 필요한 도구까지 스스로 만드는 팀입니다.</p>
-    <p class="center">그래서 라인업이 게임(던전 컴퍼니 시리즈)과 마케팅 플랫폼(campaign-hub)입니다 —<br>
-    게임을 만들고, 그 게임의 사전예약·쿠폰·이벤트 캠페인을 우리 플랫폼으로 직접 돌립니다.</p>
+    <p class="lead center">회사는 마왕성, 대표는 마왕, 직원은 몬스터, 고객은 용사, 매출은 마석, KPI는 세계정복률.<br>
+    던전 컴퍼니 시리즈는 이 하나의 세계관을 공유합니다 —
+    손그림 캐릭터와 회사생활 드립이 시리즈 전체를 관통합니다.</p>
+    <p class="center"><a class="btn" href="dungeon.html">시리즈 소개 →</a></p>
   </div>
 </section>
 
 <section class="contact-band" id="contact">
   <div class="container">
     <div class="mascot"><img src="assets/img/maou_cheer.webp" alt="응원하는 마왕" width="130" height="130"></div>
-    <h2>같이 만들 이야기가 있나요?</h2>
-    <p>협업·제안·버그 제보 모두 환영합니다.</p>
+    <h2>출시 소식 받기</h2>
+    <p>테스트·출시 소식, 협업·버그 제보 모두 환영합니다.</p>
     <a class="btn light" href="mailto:contact@beolsseo.com">contact@beolsseo.com</a>
   </div>
 </section>
@@ -127,19 +117,18 @@
   <div class="container footer-grid">
     <div class="footer-brand">
       <span class="logo"><span class="sun">☀</span> 벌써아침</span>
-      <p>밤새 만들다 보니, 벌써 아침.<br>게임과 웹 플랫폼을 만드는 작은 팀.</p>
+      <p>밤새 던전을 지켰더니, 벌써 아침.<br>게임을 만드는 작은 팀.</p>
     </div>
     <div>
-      <h4>프로젝트</h4>
+      <h4>게임</h4>
       <nav>
-        <a href="dungeon.html">던전 컴퍼니 시리즈</a>
-        <a href="campaign.html">campaign-hub</a>
+        <a href="dungeon.html#kiwoogi">마왕성 키우기</a>
+        <a href="dungeon.html#overtime">마왕님 야근 사수</a>
       </nav>
     </div>
     <div>
       <h4>회사</h4>
       <nav>
-        <a href="index.html#about">팀 소개</a>
         <a href="mailto:contact@beolsseo.com">문의</a>
       </nav>
     </div>
