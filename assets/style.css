@@ -223,7 +223,8 @@ a.card:hover{text-decoration:none;transform:translateY(-4px);box-shadow:0 14px 3
 .site-footer nav{display:flex;flex-direction:column;gap:8px}
 .site-footer a{color:#cfc4e0}
 .site-footer a:hover{color:#ffd9a0;text-decoration:none}
-.footer-meta{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-top:24px;color:#8a7da3}
+.footer-biz{display:flex;flex-wrap:wrap;gap:4px 18px;padding-top:24px;color:#8a7da3;font-size:.85rem}
+.footer-meta{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-top:12px;color:#8a7da3}
 .footer-meta a{color:#8a7da3}
 
 /* 반응형 */
