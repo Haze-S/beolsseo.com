@@ -3,21 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>던전 컴퍼니 시리즈 — 벌써아침</title>
-<meta name="description" content="마왕성도 결국 회사다 — 방치형 경영 RPG 『마왕성 키우기』와 아레나 서바이버 『마왕님 야근 사수』.">
+<title>던전 컴퍼니 — 던전을 운영하는 한국형 방치형 RPG</title>
+<meta name="description" content="던전 컴퍼니는 마왕성이라는 던전을 운영하는 한국형 방치형 RPG입니다. 간부를 채용하고 몬스터 직원을 육성해 몰려오는 용사를 막고, 접속하지 않은 동안에도 성장합니다. 벌써아침 개발, Android.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☀️</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
+<link rel="canonical" href="https://alreadymorning.com/dungeon">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="벌써아침">
-<meta property="og:title" content="던전 컴퍼니 시리즈 — 벌써아침">
-<meta property="og:description" content="마왕성도 결국 회사다 — 모바일 방치형 경영 RPG 『마왕성 키우기』와 스핀오프 『마왕님 야근 사수』.">
-<meta property="og:url" content="https://alreadymorning.com/dungeon.html">
+<meta property="og:title" content="던전 컴퍼니 — 던전을 운영하는 한국형 방치형 RPG">
+<meta property="og:description" content="마왕성이라는 던전을 운영하는 한국형 방치형 RPG. 간부를 채용하고 몬스터 직원을 육성해 몰려오는 용사를 막습니다.">
+<meta property="og:url" content="https://alreadymorning.com/dungeon">
 <meta property="og:image" content="https://alreadymorning.com/assets/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<script src="assets/site.js" defer></script>
+<!-- 이 페이지는 스크롤 리빌(assets/site.js)을 의도적으로 넣지 않는다.
+     .reveal 이 opacity:0 으로 시작하고 IntersectionObserver 로 해제되는 구조라,
+     JS는 실행하지만 스크롤하지 않는 크롤러·자동 렌더러에서는 본문이 보이지 않을 수 있다.
+     앱 소개 페이지는 어떤 환경에서도 내용이 전부 보여야 하므로 JS 의존을 두지 않는다. -->
 </head>
 <body>
 
@@ -25,9 +29,10 @@
   <div class="container">
     <a class="logo" href="index.html"><span class="sun">☀</span> 벌써아침</a>
     <nav class="site-nav">
-      <a href="index.html#games">게임</a>
+      <a href="index.html">회사 소개</a>
       <a href="dungeon.html" class="active">던전 컴퍼니</a>
-      <a href="index.html#contact">문의</a>
+      <a href="terms.html">이용약관</a>
+      <a href="privacy.html">개인정보처리방침</a>
     </nav>
   </div>
 </header>
@@ -35,11 +40,20 @@
 <section class="page-hero night">
   <div class="container">
     <div class="chips">
-      <span class="chip dark">게임 시리즈</span>
-      <span class="chip dark">개발 중</span>
+      <span class="chip dark">방치형 RPG</span>
+      <span class="chip dark">Android</span>
+      <span class="chip dark">벌써아침 개발</span>
     </div>
-    <h1>던전 컴퍼니 시리즈</h1>
-    <p>마왕성도 결국 회사다. 야근·결재·KPI에 시달리는 마왕님의 이중생활.</p>
+    <h1>던전 컴퍼니</h1>
+    <p><strong>던전을 운영하는 한국형 방치형 RPG입니다.</strong>
+    플레이어는 마왕이 되어 마왕성이라는 던전을 경영합니다 —
+    간부를 채용하고 몬스터 직원을 육성해 성으로 몰려오는 용사를 막아내고,
+    앱을 닫아둔 동안에도 쌓이는 수익으로 성을 키웁니다.</p>
+    <p style="margin-top:18px">
+      <a class="btn sun" href="https://dg.alreadymorning.com">게임 시작하기</a>
+      <a class="btn light" href="privacy.html">개인정보처리방침</a>
+      <a class="btn light" href="terms.html">이용약관</a>
+    </p>
   </div>
   <div class="wave" aria-hidden="true"></div>
 </section>
@@ -47,70 +61,102 @@
 <section class="section">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">World</span>
-      <h2>세계관</h2>
+      <span class="eyebrow">About the app</span>
+      <h2>어떤 게임인가</h2>
     </div>
-    <p class="lead center">회사는 마왕성, 대표는 마왕, 직원은 몬스터, 고객은 용사, 매출은 마석, KPI는 세계정복률.<br>
-    던전 컴퍼니 시리즈는 이 하나의 세계관을 공유하는 게임들입니다 —<br>
-    손그림·색연필 낙서 스타일의 캐릭터 아트와 회사생활 드립이 시리즈 전체를 관통합니다.</p>
+    <p class="lead">부제는 <strong>"마왕성 키우기"</strong>. 마왕성을 하나의 회사처럼 운영하는 것이 이 게임의 뼈대입니다.
+    직원은 몬스터, 고객은 성을 습격하는 용사, 매출은 마석, 그리고 목표는 세계정복률이라는 KPI입니다.</p>
+    <p>방치형(idle) 장르라 조작이 계속 필요하지 않습니다. 플레이어가 할 일은 <strong>무엇에 투자할지 결정하는 것</strong>입니다 —
+    마왕을 강화할지, 간부를 새로 채용할지, 몬스터 직원의 수를 늘려 초당 수익을 올릴지 고릅니다.
+    그 뒤에는 앱을 닫아도 진행이 계속되고, 다시 열면 그동안 쌓인 금화와 마석을 받습니다.
+    출퇴근길이나 자기 전에 잠깐씩 들여다보는 방식으로 즐기도록 설계했습니다.</p>
+    <p>게임 진행 상황은 <strong>서버에 저장</strong>됩니다. 기기를 바꾸거나 앱을 다시 설치해도 계정을 연결해 두었다면 마왕성은 그대로 남아 있고,
+    다른 플레이어와 마왕 랭킹으로 경쟁할 수 있습니다.</p>
   </div>
 </section>
 
-<section class="section alt" id="kiwoogi">
+<section class="section alt">
   <div class="container">
-    <h2>던전 컴퍼니: 마왕성 키우기 <span class="badge">본편 · 개발 중</span></h2>
-    <p class="muted">모바일 방치형 마왕성 경영 RPG · Android · Google Play 출시 예정</p>
-    <!-- Play 출시 시: <p><a class="btn sun" href="https://play.google.com/store/apps/details?id=<패키지ID>">Google Play에서 설치</a></p> -->
-    <p>부제 "마왕님은 퇴근하고 싶어". 마왕성이라는 회사를 경영하며
-    간부를 채용하고, 몬스터 직원을 육성하고, 몰려오는 용사(고객)를 응대하며
-    세계정복(KPI)을 달성하는 방치형 RPG입니다.
-    잠든 사이에도 마왕성은 돌아갑니다 — 아침에 일어나면 금화와 마석이 쌓여 있습니다.</p>
-    <ul>
-      <li>마왕 강화와 마왕 권능 — "강제 야근" "퇴근 금지 결재" "KPI 폭주" 같은 회사 드립 파워업</li>
-      <li>간부 채용·몬스터 직원 육성 — 마왕성 전투력으로 입구 방어선을 사수</li>
-      <li>보스(본사 감사)·상점·서버 랭킹 — 계정은 Google 연동 또는 게스트로 가볍게 시작</li>
-      <li>서버 기반 저장 — 기기를 바꿔도 마왕성은 그대로</li>
-    </ul>
-
+    <div class="section-head">
+      <span class="eyebrow">Screenshots</span>
+      <h2>게임 화면</h2>
+    </div>
     <div class="shots phone">
-      <figure><img src="assets/img/dc-title.webp" alt="타이틀 — 마왕님은 퇴근하고 싶어" loading="lazy"><figcaption>타이틀 · 게스트/Google 시작</figcaption></figure>
-      <figure><img src="assets/img/dc-defense.webp" alt="입구 방어선 — 신입 용사가 환불을 요구하는 전투 장면" loading="lazy"><figcaption>입구 방어선 — "이거 환불되죠?!"</figcaption></figure>
-      <figure><img src="assets/img/dc-upgrade.webp" alt="마왕 강화와 마왕 권능 업그레이드 목록" loading="lazy"><figcaption>마왕 권능 — 강제 야근 · KPI 폭주</figcaption></figure>
+      <figure>
+        <img src="assets/img/dc-shot-main.webp" alt="던전 컴퍼니 메인 화면 — 마왕성 입구에서 용사를 막는 전투 장면과 강화 목록" width="540" height="960">
+        <figcaption>마왕성 운영 화면 — 성으로 몰려온 용사를 막고, 마왕과 시설을 강화합니다</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/dc-shot-monsters.webp" alt="던전 컴퍼니 몬스터 직원 도감 — 채용 가능한 몬스터 목록과 초당 수익" width="540" height="960">
+        <figcaption>몬스터 직원 도감 — 직원을 채용할수록 초당 수익이 늘어납니다</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<section class="section" id="overtime">
+<section class="section">
   <div class="container">
-    <h2>던전 컴퍼니: 마왕님 야근 사수 <span class="badge">개발 중</span></h2>
-    <p class="muted">스핀오프 · 아레나 서바이버 · 데스크톱(Windows)</p>
-    <p>오늘만큼은 제발 정시 퇴근. 결재를 요구하며 몰려드는 몬스터 직원들에게
-    <strong>결재 반려 도장</strong>을 던지고, 본사 감사관(보스)을 버티며
-    마왕님이 <strong>18:00 정시 퇴근</strong>하는 게 목표인 한 판 15분짜리 서바이버입니다.</p>
+    <div class="section-head">
+      <span class="eyebrow">Features</span>
+      <h2>주요 기능</h2>
+    </div>
     <ul>
-      <li>28종 업그레이드 + 회전 보조무기로 빌드 구성</li>
-      <li>고유 패턴을 가진 보스 11종 · 보스 러시 모드</li>
-      <li>마왕성 강화 — 판 사이에 마석으로 영구 업그레이드(메타 진행)</li>
-      <li>난이도 4단계(인턴~과장) · 업적 15종 · AI 자동 시연</li>
+      <li><strong>마왕 강화와 마왕 권능</strong> — "강제 야근", "퇴근 금지 결재", "KPI 폭주" 등 회사생활을 비튼 능력으로 전투력을 올립니다</li>
+      <li><strong>간부 채용 · 몬스터 직원 육성</strong> — 30종 이상의 간부와 40종 이상의 몬스터를 모아 성의 방어선을 구성합니다</li>
+      <li><strong>보스(본사 감사) 전투</strong> — 스테이지를 올리며 감사관을 격파하고 마석을 확보합니다</li>
+      <li><strong>방치 수익</strong> — 접속하지 않은 시간만큼 금화가 쌓이고, 다시 열 때 정산됩니다</li>
+      <li><strong>마왕 랭킹</strong> — 전투력 기준으로 다른 플레이어와 순위를 겨룹니다</li>
+      <li><strong>손그림 아트</strong> — 색연필 낙서 스타일의 캐릭터와 회사생활 드립이 게임 전체를 관통합니다</li>
     </ul>
-
-    <div class="shots">
-      <figure><img src="assets/img/gameplay.webp" alt="게임플레이 — 몰려드는 몬스터 직원들과 전투" loading="lazy"><figcaption>몰려드는 결재 요청들</figcaption></figure>
-      <figure><img src="assets/img/title.webp" alt="타이틀 화면 — 직급 선택" loading="lazy"><figcaption>타이틀 · 직급(난이도) 선택</figcaption></figure>
-      <figure><img src="assets/img/levelup.webp" alt="레벨업 업그레이드 3택1 화면" loading="lazy"><figcaption>레벨업 — 회사 드립 업그레이드 3택1</figcaption></figure>
-      <figure><img src="assets/img/orbit.webp" alt="결재판 회전대 보조무기" loading="lazy"><figcaption>결재판 회전대</figcaption></figure>
-      <figure><img src="assets/img/shop.webp" alt="마왕성 강화 상점" loading="lazy"><figcaption>마왕성 강화 — 영구 업그레이드</figcaption></figure>
-      <figure><img src="assets/img/bossrush.webp" alt="보스 러시 모드" loading="lazy"><figcaption>보스 러시</figcaption></figure>
-    </div>
   </div>
 </section>
 
-<section class="contact-band">
+<section class="section alt">
   <div class="container">
-    <div class="mascot"><img src="assets/img/maou_cheer.webp" alt="응원하는 마왕" width="130" height="130"></div>
-    <h2>출시 소식 받기</h2>
-    <p>두 작품 모두 열심히 만드는 중입니다. 출시·테스트 소식이 궁금하다면 알려주세요.</p>
-    <a class="btn light" href="mailto:contact@alreadymorning.com">contact@alreadymorning.com</a>
+    <div class="section-head">
+      <span class="eyebrow">Account &amp; data</span>
+      <h2>계정과 데이터</h2>
+    </div>
+    <p>던전 컴퍼니는 <strong>게스트로 바로 시작</strong>할 수 있고, 로그인은 선택입니다.
+    구글 계정으로 로그인하는 경우는 다음 두 가지 목적뿐입니다.</p>
+    <ul>
+      <li><strong>진행 상황 보관</strong> — 기기를 바꾸거나 앱을 다시 설치해도 마왕성을 이어서 키울 수 있게 합니다</li>
+      <li><strong>랭킹 참여</strong> — 마왕 랭킹에 플레이어를 식별해 등록합니다</li>
+    </ul>
+    <p>이때 요청하는 정보는 <strong>이메일 주소와 기본 프로필(이름·프로필 사진)</strong>뿐입니다.
+    연락처·캘린더·파일 등 다른 데이터에는 접근하지 않으며, 게임 진행에 필요한 정보 외에는 수집하지 않습니다.
+    광고 식별자를 이용한 추적도 하지 않습니다.</p>
+    <p>앱 안에서 언제든 <strong>계정 삭제</strong>를 요청할 수 있고, 요청 시 서버에 저장된 게임 데이터와 계정이 함께 파기됩니다.
+    자세한 처리 기준은 <a href="privacy.html">개인정보처리방침</a>에 적어두었습니다.</p>
+    <p class="muted">문의: <a href="mailto:contact@alreadymorning.com">contact@alreadymorning.com</a></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Publisher</span>
+      <h2>개발사</h2>
+    </div>
+    <p>던전 컴퍼니는 <a href="index.html">벌써아침</a>이 개발·운영하는 게임입니다.
+    Android용으로 Google Play 출시를 준비하고 있으며, 웹 브라우저에서도 플레이할 수 있습니다.</p>
+    <p>
+      <a class="btn sun" href="https://dg.alreadymorning.com">게임 시작하기</a>
+      <a class="btn" href="index.html">벌써아침 소개</a>
+    </p>
+  </div>
+</section>
+
+<section class="section alt" id="overtime">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Also from the series</span>
+      <h2>같은 세계관의 다른 작품</h2>
+    </div>
+    <p><strong>마왕님 야근 사수</strong> <span class="badge">개발 중</span> — 던전 컴퍼니와 세계관을 공유하는
+    데스크톱(Windows) 아레나 서바이버입니다. 결재를 요구하며 몰려드는 몬스터 직원에게 결재 반려 도장을 던지고,
+    마왕님이 18:00 정시 퇴근하는 것이 목표인 한 판 15분짜리 게임입니다.</p>
+    <p class="muted">위 방치형 RPG와는 별개의 게임이며, 이 페이지가 소개하는 <strong>던전 컴퍼니</strong>는 Android 모바일 게임입니다.</p>
   </div>
 </section>
 
@@ -121,15 +167,16 @@
       <p>밤새 던전을 지켰더니, 벌써 아침.<br>게임을 만드는 작은 팀.</p>
     </div>
     <div>
-      <h4>게임</h4>
+      <h4>던전 컴퍼니</h4>
       <nav>
-        <a href="dungeon.html#kiwoogi">마왕성 키우기</a>
-        <a href="dungeon.html#overtime">마왕님 야근 사수</a>
+        <a href="dungeon.html">게임 소개</a>
+        <a href="https://dg.alreadymorning.com">게임 시작하기</a>
       </nav>
     </div>
     <div>
       <h4>회사</h4>
       <nav>
+        <a href="index.html">회사 소개</a>
         <a href="mailto:contact@alreadymorning.com">문의</a>
       </nav>
     </div>
