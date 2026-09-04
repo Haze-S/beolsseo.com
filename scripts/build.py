@@ -28,9 +28,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 UA = "Mozilla/5.0 (compatible; beolsseo-hub-build/1.0; +https://beolsseo.com)"
-STATIC = ["assets", "privacy", "robots.txt", "sitemap.xml", "CNAME", ".nojekyll"]
+# privacy 는 STATIC 복사가 아니라 렌더(HEAD_EXTRA 주입)로 처리한다 — 아래 build() 참조.
+STATIC = ["assets", "robots.txt", "sitemap.xml", "CNAME", ".nojekyll"]
 ATOM = "{http://www.w3.org/2005/Atom}"
 SUMMARY_MAX = 110
+ADS_TXT_EXCHANGE = "f08c47fec0942fa0"  # Google AdSense 고정 relationship ID
 
 
 def esc(s: object) -> str:
@@ -132,6 +134,39 @@ def load_feed(url: str, limit: int, offline: bool) -> list[dict]:
     return items[:limit]
 
 
+# ---------- 애드센스·인증 슬롯 (이슈 #3) ----------
+
+def render_head_extra(site: dict) -> str:
+    """값이 채워진 슬롯만 head 태그로 출력한다. 빈 값이면 아무것도 내지 않는다
+    — 빈 메타/빈 스크립트가 나가면 애드센스·서치콘솔 검증이 깨진다(#3, blog-dev #26 교훈).
+    부분 입력(예: 인증만)도 있는 것만 출력한다."""
+    lines: list[str] = []
+    client = str(site.get("adsense_client") or "").strip()
+    if client:
+        lines.append(
+            '    <script async '
+            f'src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={esc(client)}" '
+            'crossorigin="anonymous"></script>'
+        )
+    gsv = str(site.get("google_site_verification") or "").strip()
+    if gsv:
+        lines.append(f'    <meta name="google-site-verification" content="{esc(gsv)}" />')
+    nsv = str(site.get("naver_site_verification") or "").strip()
+    if nsv:
+        lines.append(f'    <meta name="naver-site-verification" content="{esc(nsv)}" />')
+    return "\n".join(lines)
+
+
+def ads_txt(site: dict) -> str | None:
+    """adsense_client 가 있을 때만 ads.txt 내용을 만든다. 없으면 None → 파일 자체를 만들지 않는다
+    (빈 ads.txt 를 200 으로 서빙하지 않는다, #3). ca-pub-… → ads.txt 에는 ca- 를 뗀 pub-… 를 쓴다."""
+    client = str(site.get("adsense_client") or "").strip()
+    if not client:
+        return None
+    pub = client[3:] if client.startswith("ca-") else client
+    return f"google.com, {pub}, DIRECT, {ADS_TXT_EXCHANGE}\n"
+
+
 # ---------- 렌더 ----------
 
 def render_card(b: dict) -> str:
@@ -190,24 +225,42 @@ def render_banner(banner: dict) -> str:
     )
 
 
-def render_index(template: str, blogs: list[dict], feeds: dict[str, list[dict]], banner: dict, year: int) -> str:
+def _clean_blanks(out: str) -> str:
+    # 빈 플레이스홀더가 남긴 빈 줄 정리
+    return re.sub(r"\n[ \t]*\n(?=[ \t]*\n)", "\n", out)
+
+
+def render_index(template: str, blogs: list[dict], feeds: dict[str, list[dict]], banner: dict,
+                 year: int, head_extra: str = "") -> str:
     live = [b for b in blogs if b.get("status") == "live" and b.get("url")]
     cards = "\n".join(render_card(b) for b in live)
     recent = "\n".join(s for s in (render_recent(b, feeds.get(b["id"], [])) for b in live) if s)
     out = template
+    out = out.replace("{{HEAD_EXTRA}}", head_extra)
     out = out.replace("{{CARDS}}", cards)
     out = out.replace("{{RECENT}}", recent)
     out = out.replace("{{BANNER}}", render_banner(banner))
     out = out.replace("{{YEAR}}", str(year))
-    # 빈 플레이스홀더 줄 정리
-    return re.sub(r"\n[ \t]*\n(?=[ \t]*\n)", "\n", out)
+    return _clean_blanks(out)
+
+
+def render_privacy(template: str, head_extra: str = "") -> str:
+    """privacy 페이지도 head 슬롯을 주입한다 — 애드센스·인증은 두 페이지 모두에 있어야 한다(#3)."""
+    return _clean_blanks(template.replace("{{HEAD_EXTRA}}", head_extra))
+
+
+def load_json(name: str) -> dict:
+    p = ROOT / "data" / name
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
 def build(out_dir: Path, limit: int, offline: bool) -> Path:
     blogs = json.loads((ROOT / "data" / "blogs.json").read_text(encoding="utf-8"))
-    banner_path = ROOT / "data" / "banner.json"
-    banner = json.loads(banner_path.read_text(encoding="utf-8")) if banner_path.exists() else {}
+    banner = load_json("banner.json")
+    site = load_json("site.json")
+    head_extra = render_head_extra(site)
     template = (ROOT / "templates" / "index.html").read_text(encoding="utf-8")
+    privacy_tpl = (ROOT / "privacy" / "index.html").read_text(encoding="utf-8")
 
     feeds: dict[str, list[dict]] = {}
     for b in blogs:
@@ -215,12 +268,15 @@ def build(out_dir: Path, limit: int, offline: bool) -> Path:
             feeds[b["id"]] = load_feed(b["feed"], limit, offline)
 
     year = dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).year
-    page = render_index(template, blogs, feeds, banner, year)
+    page = render_index(template, blogs, feeds, banner, year, head_extra)
 
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
     (out_dir / "index.html").write_text(page, encoding="utf-8")
+    # privacy 는 head 슬롯 주입 후 렌더 (STATIC 복사 아님)
+    (out_dir / "privacy").mkdir(parents=True, exist_ok=True)
+    (out_dir / "privacy" / "index.html").write_text(render_privacy(privacy_tpl, head_extra), encoding="utf-8")
     for name in STATIC:
         src = ROOT / name
         if not src.exists():
@@ -229,8 +285,13 @@ def build(out_dir: Path, limit: int, offline: bool) -> Path:
             shutil.copytree(src, out_dir / name)
         else:
             shutil.copy2(src, out_dir / name)
+    # ads.txt 는 adsense_client 가 있을 때만 (없으면 파일 자체를 만들지 않는다 → 404, #3)
+    ads = ads_txt(site)
+    if ads:
+        (out_dir / "ads.txt").write_text(ads, encoding="utf-8")
     log(f"[build] dist → {out_dir} (블로그 {len([b for b in blogs if b.get('status') == 'live'])}개, "
-        f"최신 글 {sum(len(v) for v in feeds.values())}건)")
+        f"최신 글 {sum(len(v) for v in feeds.values())}건, "
+        f"head슬롯 {'있음' if head_extra else '없음'}, ads.txt {'생성' if ads else '없음'})")
     return out_dir
 
 
