@@ -3,23 +3,23 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>벌써아침 — 블로그</title>
+    <title>Haze의 블로그</title>
     <meta
       name="description"
-      content="벌써아침의 블로그 허브. 개발·생활정보 등 주제별 블로그로 이동하는 입구입니다."
+      content="개발자 Haze가 운영하는 주제별 블로그 모음. 개발 블로그의 최신 글과 각 블로그로 가는 입구입니다."
     />
     <link rel="canonical" href="https://beolsseo.com/" />
     <meta name="color-scheme" content="light dark" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="벌써아침 — 블로그" />
-    <meta property="og:description" content="벌써아침의 블로그 허브." />
+    <meta property="og:title" content="Haze의 블로그" />
+    <meta property="og:description" content="개발자 Haze가 운영하는 주제별 블로그 모음." />
     <meta property="og:url" content="https://beolsseo.com/" />
     <link rel="stylesheet" href="/assets/css/style.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="site-title" href="/">벌써아침</a>
+        <a class="site-title" href="/">Haze의 블로그</a>
         <nav class="site-nav"><a href="/privacy/">개인정보처리방침</a></nav>
       </div>
     </header>
@@ -27,33 +27,33 @@
     <main>
       <section class="hero">
         <div class="wrap">
-          <h1>벌써아침 블로그</h1>
-          <p>주제별로 나눠 쓰는 블로그의 입구입니다. 관심 있는 곳으로 들어가 보세요.</p>
+          <h1>Haze의 블로그</h1>
+          <p>개발자 한 사람이 주제별로 나눠 쓰는 블로그의 입구입니다. 관심 있는 곳으로 들어가 보세요.</p>
         </div>
       </section>
 
       <section class="section">
         <div class="wrap">
           <h2>블로그</h2>
-          <div id="blog-list" class="card-list"></div>
-          <p class="company">
-            <a href="https://alreadymorning.com" rel="noopener">벌써아침 회사·게임 사이트 →</a>
-          </p>
+          <div class="card-list">
+{{CARDS}}
+          </div>
         </div>
       </section>
+{{BANNER}}
+{{RECENT}}
     </main>
 
     <footer class="site-footer">
       <div class="wrap">
-        <p class="biz">벌써아침</p>
         <p class="links">
-          <span>사업자등록번호 818-10-02994</span>
+          <span>© {{YEAR}} Haze</span>
           <span class="sep">·</span>
           <span>문의 <a href="mailto:blog@alreadymorning.com">blog@alreadymorning.com</a></span>
+          <span class="sep">·</span>
+          <a href="/privacy/">개인정보처리방침</a>
         </p>
       </div>
     </footer>
-
-    <script src="/assets/js/blogs.js"></script>
   </body>
 </html>
