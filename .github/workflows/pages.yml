@@ -1,0 +1,64 @@
+name: Build & Deploy Hub
+
+# beolsseo.com 허브 빌드·배포 (이슈 #1)
+# - 빌드 타임에 각 블로그 피드를 읽어 최신 글을 정적 렌더링한다 → 크롤러가 그대로 본다.
+# - 피드 실패는 빌드를 깨뜨리지 않는다 (scripts/build.py).
+# - 회사 정보 잔존 검사(scripts/check_forbidden.py)에 걸리면 배포하지 않는다.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 매일 KST 07:17 (= 22:17 UTC 전날) — 개발 블로그 발행(KST 06:xx) 뒤 최신 글 반영.
+    # 정각은 GitHub schedule 누락이 잦아 피한다.
+    - cron: "17 22 * * *"
+  workflow_dispatch:
+  repository_dispatch:
+    types: [hub-rebuild]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 단위 테스트
+        run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
+
+      - name: 빌드 (피드 → 정적 HTML)
+        run: python3 scripts/build.py --out dist --limit 8
+
+      - name: 회사 정보 잔존 검사
+        run: python3 scripts/check_forbidden.py dist
+
+      - name: 빌드 결과 요약
+        run: |
+          echo "## 허브 빌드" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          grep -c 'class="post-link"' dist/index.html | sed 's/^/최신 글 렌더링 수: /' >> "$GITHUB_STEP_SUMMARY" || true
+          grep -o '<a class="card" href="[^"]*"' dist/index.html >> "$GITHUB_STEP_SUMMARY" || true
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
