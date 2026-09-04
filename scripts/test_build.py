@@ -109,6 +109,58 @@ class Render(unittest.TestCase):
         self.assertIn("|2026<", build.render_index(TEMPLATE, BLOGS, {}, {}, 2026))
 
 
+class HeadSlots(unittest.TestCase):
+    """애드센스·검색엔진 인증 슬롯 (이슈 #3)."""
+
+    def test_empty_site_emits_nothing(self):
+        # 파일 없음/빈 dict/빈 문자열 모두 아무것도 내지 않는다 (빈 메타 금지)
+        for site in ({}, {"adsense_client": "", "google_site_verification": "", "naver_site_verification": ""}):
+            self.assertEqual(build.render_head_extra(site), "")
+            self.assertIsNone(build.ads_txt(site))
+
+    def test_values_emit_tags_and_ads_txt(self):
+        site = {
+            "adsense_client": "ca-pub-8137295084344862",
+            "google_site_verification": "gsv_abc123",
+            "naver_site_verification": "nsv_def456",
+        }
+        head = build.render_head_extra(site)
+        self.assertIn("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", head)
+        self.assertIn("client=ca-pub-8137295084344862", head)
+        self.assertIn('crossorigin="anonymous"', head)
+        self.assertIn('<meta name="google-site-verification" content="gsv_abc123" />', head)
+        self.assertIn('<meta name="naver-site-verification" content="nsv_def456" />', head)
+        # ads.txt: ca- 제거한 pub-… + 고정 exchange ID, 한 줄
+        ads = build.ads_txt(site)
+        self.assertEqual(ads.strip(), "google.com, pub-8137295084344862, DIRECT, f08c47fec0942fa0")
+        self.assertEqual(ads.count("\n"), 1)
+
+    def test_partial_only_emits_present_slots(self):
+        # 인증 코드만 있고 애드센스는 비어 있으면 → meta 만, 스크립트·ads.txt 없음
+        site = {"adsense_client": "", "google_site_verification": "only_gsv", "naver_site_verification": ""}
+        head = build.render_head_extra(site)
+        self.assertIn('google-site-verification" content="only_gsv"', head)
+        self.assertNotIn("adsbygoogle", head)
+        self.assertNotIn("naver-site-verification", head)
+        self.assertIsNone(build.ads_txt(site))
+
+    def test_head_extra_injected_into_both_templates(self):
+        head = "  <meta name='google-site-verification' content='X' />"
+        idx = build.render_index("<head>{{HEAD_EXTRA}}</head>", BLOGS, {}, {}, 2026, head)
+        self.assertIn("content='X'", idx)
+        priv = build.render_privacy("<head>{{HEAD_EXTRA}}</head>", head)
+        self.assertIn("content='X'", priv)
+
+    def test_empty_head_extra_leaves_no_placeholder_or_adsense(self):
+        for out in (
+            build.render_index("<head>\n{{HEAD_EXTRA}}\n<link/>\n</head>", BLOGS, {}, {}, 2026, ""),
+            build.render_privacy("<head>\n{{HEAD_EXTRA}}\n<link/>\n</head>", ""),
+        ):
+            self.assertNotIn("{{HEAD_EXTRA}}", out)
+            self.assertNotIn("adsbygoogle", out)
+            self.assertNotIn("site-verification", out)
+
+
 class Forbidden(unittest.TestCase):
     def test_email_allowed_but_company_strings_flagged(self):
         text = 'a <a href="mailto:blog@alreadymorning.com">blog@alreadymorning.com</a>\n벌써아침\n사업자등록번호 818-10-02994\n<a href="https://alreadymorning.com">x</a>\n'
