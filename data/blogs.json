@@ -7,5 +7,14 @@
     "feed": "https://dev.beolsseo.com/feed.xml",
     "emoji": "💻",
     "status": "live"
+  },
+  {
+    "id": "life",
+    "title": "생활정보 블로그",
+    "desc": "실생활 정보와 IT·가전 구매 팁을 공식 자료로 확인해 정리합니다.",
+    "url": "https://life.beolsseo.com",
+    "feed": "https://life.beolsseo.com/feed.xml",
+    "emoji": "🏠",
+    "status": "planned"
   }
 ]
