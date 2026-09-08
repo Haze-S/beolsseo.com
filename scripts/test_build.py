@@ -172,5 +172,30 @@ class Forbidden(unittest.TestCase):
         self.assertEqual(check_forbidden.scan_text("© 2026 Haze · blog@alreadymorning.com"), [])
 
 
+class DesignSyncTest(unittest.TestCase):
+    """허브 #6 — blog-dev 디자인 시스템 동기화 계약."""
+    ROOT = Path(__file__).resolve().parent.parent
+
+    def test_templates_have_favicon_and_single_webfont(self):
+        for name in ("templates/index.html", "privacy/index.html"):
+            html = (self.ROOT / name).read_text(encoding="utf-8")
+            self.assertIn('rel="icon" href="/favicon.ico"', html, name)
+            self.assertIn('rel="apple-touch-icon"', html, name)
+            self.assertEqual(html.count("pretendardvariable-dynamic-subset"), 1, name)
+            self.assertNotIn("googleapis.com/css", html, name)  # 웹폰트는 1종만
+
+    def test_static_ships_favicon(self):
+        self.assertIn("favicon.ico", build.STATIC)
+        for f in ("favicon.ico", "assets/favicon.svg", "assets/apple-touch-icon.png"):
+            self.assertTrue((self.ROOT / f).exists(), f)
+
+    def test_css_sync_block_present(self):
+        css = (self.ROOT / "assets/css/style.css").read_text(encoding="utf-8")
+        self.assertIn("[동기화 블록 시작]", css)
+        self.assertIn("--accent: #3f5fcf", css)
+        self.assertEqual(css.count("@media (prefers-color-scheme: dark)"), 1)
+        self.assertIn('font-family: "Pretendard Fallback"', css)
+
+
 if __name__ == "__main__":
     unittest.main()

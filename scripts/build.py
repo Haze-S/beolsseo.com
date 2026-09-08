@@ -29,7 +29,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 UA = "Mozilla/5.0 (compatible; beolsseo-hub-build/1.0; +https://beolsseo.com)"
 # privacy 는 STATIC 복사가 아니라 렌더(HEAD_EXTRA 주입)로 처리한다 — 아래 build() 참조.
-STATIC = ["assets", "robots.txt", "sitemap.xml", "CNAME", ".nojekyll"]
+STATIC = ["assets", "robots.txt", "sitemap.xml", "CNAME", ".nojekyll", "favicon.ico"]  # favicon.ico: scripts/favicon.py 산출물 (#6)
 ATOM = "{http://www.w3.org/2005/Atom}"
 SUMMARY_MAX = 110
 ADS_TXT_EXCHANGE = "f08c47fec0942fa0"  # Google AdSense 고정 relationship ID

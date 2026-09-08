@@ -13,6 +13,11 @@
 - `scripts/check_forbidden.py` — 빌드 결과에 회사 정보(상호·사업자등록번호·회사 사이트 링크)가 남아 있으면 빌드를 실패시킨다.
   문의 이메일 `blog@alreadymorning.com` 만 예외.
 - `privacy/` — 개인정보처리방침(운영자 표기 + 연락 이메일만).
+- `assets/css/style.css` — 디자인은 **blog-dev #15 디자인 시스템과 동기화**한다(허브 #6). 파일 맨 위 `[동기화 블록]`(`:root` 변수·다크 팔레트·폰트 폴백 보정)은
+  blog-dev `assets/css/main.css` 의 같은 블록과 **동일하게 유지**하고, 블로그 쪽이 바뀌면 그대로 복사해 온다. 허브 고유 규칙은 그 아래에만 쓴다.
+  웹폰트는 Pretendard Variable 1종(`templates/index.html`·`privacy/index.html` 의 `<link>`), 외부 CSS/JS 프레임워크 없음.
+- `scripts/favicon.py` — `data/site.json` `favicon`(bg/fg/glyph) 값으로 `favicon.ico`·`assets/favicon.svg`·`assets/apple-touch-icon.png` 생성(blog-dev 와 같은 도형 규칙, 허브 글리프 `H`).
+  변경 시 `python3 scripts/favicon.py --force` 로 재생성해 커밋한다(빌드는 파일을 복사만 함).
 
 ## 배포
 
