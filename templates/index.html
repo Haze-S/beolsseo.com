@@ -4,15 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Haze의 블로그</title>
-    <meta
-      name="description"
-      content="개발자 Haze가 운영하는 주제별 블로그 모음. 개발 블로그의 최신 글과 각 블로그로 가는 입구입니다."
-    />
+    <meta name="description" content="{{META_DESC}}" />
     <link rel="canonical" href="https://beolsseo.com/" />
     <meta name="color-scheme" content="light dark" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Haze의 블로그" />
-    <meta property="og:description" content="개발자 Haze가 운영하는 주제별 블로그 모음." />
+    <meta property="og:description" content="{{META_DESC}}" />
     <meta property="og:url" content="https://beolsseo.com/" />
 {{HEAD_EXTRA}}
     <!-- 파비콘 (#6) — scripts/favicon.py 가 data/site.json favicon 값으로 생성 -->
@@ -36,20 +33,11 @@
       <section class="hero">
         <div class="wrap">
           <h1>Haze의 블로그</h1>
-          <p>개발자 한 사람이 주제별로 나눠 쓰는 블로그의 입구입니다. 관심 있는 곳으로 들어가 보세요.</p>
         </div>
       </section>
 
-      <section class="section">
-        <div class="wrap">
-          <h2>블로그</h2>
-          <div class="card-list">
-{{CARDS}}
-          </div>
-        </div>
-      </section>
+{{BLOGS}}
 {{BANNER}}
-{{RECENT}}
     </main>
 
     <footer class="site-footer">

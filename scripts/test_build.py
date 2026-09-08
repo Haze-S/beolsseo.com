@@ -35,7 +35,7 @@ BLOGS = [
     {"id": "dev", "title": "개발 블로그", "desc": "d", "url": "https://dev.example.com", "feed": "https://dev.example.com/feed.xml", "emoji": "💻", "status": "live"},
     {"id": "life", "title": "생활 블로그", "desc": "l", "url": "", "feed": "", "emoji": "🏠", "status": "planned"},
 ]
-TEMPLATE = "<main>{{CARDS}}|{{BANNER}}|{{RECENT}}|{{YEAR}}</main>"
+TEMPLATE = "<head><meta name=\"description\" content=\"{{META_DESC}}\"></head><main>{{BLOGS}}|{{BANNER}}|{{YEAR}}</main>"
 
 
 class FeedParse(unittest.TestCase):
@@ -74,27 +74,40 @@ class FeedParse(unittest.TestCase):
 
 
 class Render(unittest.TestCase):
-    def test_only_live_blogs_get_cards_and_no_soon_card(self):
+    """허브 #9 — 블로그 하나 = 블록 하나(이름 링크 + 최신 글). planned 는 블록 자체가 없다."""
+
+    def test_only_live_blogs_get_blocks_and_no_planned_block(self):
         out = build.render_index(TEMPLATE, BLOGS, {}, {}, 2026)
-        self.assertEqual(out.count('class="card"'), 1)
-        self.assertIn('href="https://dev.example.com"', out)
+        self.assertEqual(out.count('class="blog-block"'), 1)
+        self.assertIn('<h2 class="blog-title"><a href="https://dev.example.com"', out)
         self.assertNotIn("생활 블로그", out)
         self.assertNotIn("준비 중", out)
         self.assertNotIn('href=""', out)
+        self.assertNotIn('class="card"', out)  # 옛 카드 섹션 없음
 
-    def test_recent_rendered_statically(self):
+    def test_recent_posts_inside_block_title_and_date_only(self):
         posts = build.parse_feed(ATOM)
         out = build.render_index(TEMPLATE, BLOGS, {"dev": posts}, {}, 2026)
-        self.assertEqual(out.count('class="post-link"'), 2)
-        self.assertIn("개발 블로그 최신 글", out)
-        self.assertIn('<time datetime="2026-09-02">', out)
-        self.assertIn("첫 글 &amp; 제목", out)
+        block = out[out.index('class="blog-block"'):out.index("</section>")]
+        self.assertEqual(block.count('class="post-link"'), 2)
+        self.assertIn('<time datetime="2026-09-02">2026-09-02</time>', block)
+        self.assertIn("첫 글 &amp; 제목", block)
+        self.assertNotIn("본문 요약입니다", block)  # 요약문은 넣지 않는다 (#9)
+        self.assertNotIn("최신 글", out[out.index("<main>"):])  # 별도 '최신 글' 섹션 없음
         self.assertNotIn("<script", out)
 
-    def test_empty_feed_keeps_card_and_omits_recent_section(self):
+    def test_empty_feed_keeps_block_and_link_but_no_list(self):
         out = build.render_index(TEMPLATE, BLOGS, {"dev": []}, {}, 2026)
-        self.assertIn('class="card"', out)
-        self.assertNotIn("최신 글", out)
+        self.assertIn('class="blog-block"', out)
+        self.assertIn('href="https://dev.example.com"', out)
+        self.assertNotIn('class="post-list"', out)
+
+    def test_meta_desc_is_topics_not_operator(self):
+        out = build.render_index(TEMPLATE, BLOGS, {}, {}, 2026)
+        self.assertIn('content="개발 블로그의 최신 글 모음. 각 블로그의 새 글을 한곳에서 봅니다."', out)
+        self.assertNotIn("Haze가", out)
+        self.assertNotIn("운영", out)
+        self.assertNotIn("{{META_DESC}}", out)
 
     def test_banner_off_by_default_and_on_when_enabled(self):
         off = build.render_index(TEMPLATE, BLOGS, {}, {"enabled": False, "title": "게임", "url": "https://g"}, 2026)
@@ -107,6 +120,30 @@ class Render(unittest.TestCase):
 
     def test_year(self):
         self.assertIn("|2026<", build.render_index(TEMPLATE, BLOGS, {}, {}, 2026))
+
+    def test_default_limit_is_five(self):
+        import argparse  # noqa: F401
+        src = Path(build.__file__).read_text(encoding="utf-8")
+        self.assertIn('"--limit", type=int, default=5', src)
+
+
+class NoSelfIntro(unittest.TestCase):
+    """허브 #9 — 자기소개·운영자 서술 금지 (자기 지칭). 템플릿과 blogs.json 을 직접 본다."""
+    ROOT = Path(__file__).resolve().parent.parent
+
+    def test_template_has_no_operator_intro(self):
+        html = (self.ROOT / "templates/index.html").read_text(encoding="utf-8")
+        for bad in ("개발자 한 사람", "운영하는", "개발자 Haze가", "입구입니다"):
+            self.assertNotIn(bad, html, bad)
+        self.assertIn("{{META_DESC}}", html)
+        self.assertIn("{{BLOGS}}", html)
+        self.assertNotIn("{{CARDS}}", html)
+        self.assertNotIn("{{RECENT}}", html)
+
+    def test_blog_desc_is_topics_only(self):
+        import json
+        for b in json.loads((self.ROOT / "data/blogs.json").read_text(encoding="utf-8")):
+            self.assertNotRegex(b["desc"], r"합니다|입니다|기록|정리합", b["id"])
 
 
 class HeadSlots(unittest.TestCase):
