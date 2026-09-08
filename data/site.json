@@ -2,5 +2,11 @@
   "_comment": "애드센스·검색엔진 인증 슬롯 (이슈 #3). 값이 있을 때만 head 에 출력하고, adsense_client 가 있을 때만 /ads.txt 를 만든다. 빈 문자열이면 아무것도 출력하지 않는다(빈 메타·빈 ads.txt 금지). 🔴 실제 ca-pub 값·인증 코드는 대표가 별도 PR 로 넣는다 — 여기 커밋 금지.",
   "adsense_client": "ca-pub-8137295084344862",
   "google_site_verification": "",
-  "naver_site_verification": ""
+  "naver_site_verification": "",
+  "favicon": {
+    "_comment": "scripts/favicon.py 입력 (#6). bg 는 CSS --accent 와 동일. glyph: 한 글자 텍스트 또는 prompt(`>_`). 변경 후 python3 scripts/favicon.py --force 로 재생성해 커밋",
+    "bg": "#3f5fcf",
+    "fg": "#ffffff",
+    "glyph": "H"
+  }
 }
