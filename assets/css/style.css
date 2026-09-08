@@ -127,46 +127,25 @@ main { padding: 2.5rem 0 3rem; }
 .hero h1 { font-size: 1.6rem; line-height: 1.3; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
 .hero p { margin: 0; color: var(--muted); font-size: 1rem; }
 
-/* ---------- 섹션 ---------- */
-.section { padding: 0 0 2.25rem; }
-.section h2 {
-  font-size: 0.84rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
-  color: var(--muted); margin: 0 0 0.9rem;
+/* ---------- 블로그 블록 (#9) — 블로그 하나 = 블록 하나: 이름(링크) + 주제 + 최신 글 5개 ---------- */
+.blog-block { padding: 0 0 2.5rem; }
+.blog-block + .blog-block .wrap { padding-top: 2.25rem; border-top: 1px solid var(--border-soft); }
+.blog-title { margin: 0 0 0.3rem; font-size: 1.35rem; line-height: 1.35; letter-spacing: -0.02em; font-weight: 700; }
+.blog-title a { color: var(--fg); display: inline-flex; align-items: center; gap: 0.5rem; }
+.blog-title a:hover { color: var(--accent); text-decoration: none; }
+.blog-emoji { font-size: 1.15em; line-height: 1; }
+.blog-arrow { color: var(--muted); font-weight: 500; transition: transform 0.15s ease; }
+.blog-title a:hover .blog-arrow { color: var(--accent); transform: translateX(2px); }
+.blog-desc { margin: 0 0 1rem; color: var(--muted); font-size: 0.95rem; }
+.blog-block .post-list { list-style: none; margin: 0; padding: 0; }
+.blog-block .post-list li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: 0.7rem 0; border-bottom: 1px solid var(--border-soft);
 }
-
-/* ---------- 블로그 카드 (data/blogs.json → build.py) ---------- */
-.card-list { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
-@media (min-width: 560px) { .card-list { grid-template-columns: 1fr 1fr; } }
-.card {
-  display: flex; align-items: flex-start; gap: 0.85rem;
-  padding: 1.05rem 1.1rem;
-  border: 1px solid var(--border); border-radius: 12px;
-  background: var(--bg-elev); color: var(--fg); box-shadow: var(--shadow);
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-a.card:hover { text-decoration: none; border-color: var(--accent); transform: translateY(-1px); }
-.card-emoji { font-size: 1.5rem; line-height: 1.4; flex: 0 0 auto; }
-.card-body { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
-.card-title { font-weight: 700; font-size: 1.02rem; letter-spacing: -0.01em; }
-.card-desc { color: var(--fg-soft); font-size: 0.92rem; line-height: 1.6; }
-
-/* ---------- 최신 글 (피드 → build.py) = 블로그 홈 목록과 같은 결 ---------- */
-.recent .post-list { list-style: none; margin: 0; padding: 0; }
-.recent .post-list li { padding: 1.15rem 0; border-bottom: 1px solid var(--border-soft); }
-.recent .post-list li:first-child { padding-top: 0.25rem; }
-.recent .post-list li:last-child { border-bottom: 0; }
-.recent .post-link {
-  display: block; color: var(--fg); font-size: 1.12rem; font-weight: 700; line-height: 1.4; letter-spacing: -0.015em;
-}
-.recent .post-link:hover { color: var(--accent); text-decoration: none; }
-.recent .post-meta { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
-.recent .post-desc {
-  margin: 0.3rem 0 0; color: var(--fg-soft); font-size: 0.95rem; line-height: 1.65;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
-.recent .more { margin: 1.25rem 0 0; font-size: 0.92rem; }
-.recent .more a { color: var(--muted); }
-.recent .more a:hover { color: var(--accent); }
+.blog-block .post-list li:last-child { border-bottom: 0; }
+.blog-block .post-link { color: var(--fg); font-weight: 600; font-size: 1.02rem; line-height: 1.5; letter-spacing: -0.01em; min-width: 0; }
+.blog-block .post-link:hover { color: var(--accent); text-decoration: none; }
+.blog-block time { flex: 0 0 auto; color: var(--muted); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
 
 /* ---------- 홍보 배너 슬롯 (최대 1개) — blog-dev promo-slot 과 같은 표현: 점선 테두리 + 라벨 ---------- */
 .promo { padding: 0 0 2.25rem; }
@@ -213,6 +192,7 @@ a.card:hover { text-decoration: none; border-color: var(--accent); transform: tr
   .hero h1 { font-size: 1.35rem; }
   .article h1 { font-size: 1.5rem; }
   .article h2 { font-size: 1.2rem; margin-top: 2.4rem; }
+  .blog-block .post-list li { flex-direction: column; gap: 0.15rem; }
   .site-footer .links { flex-direction: column; }
   .site-footer .sep { display: none; }
 }

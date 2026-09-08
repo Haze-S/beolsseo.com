@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """beolsseo.com 허브 빌드 (이슈 #1)
 
-- data/blogs.json 의 status=live 블로그만 카드로 렌더링한다 (그 외 상태는 카드 자체를 만들지 않음).
-- 각 live 블로그의 feed(Atom/RSS)를 **빌드 타임**에 읽어 최신 글 목록을 정적 HTML 로 넣는다.
+- data/blogs.json 의 status=live 블로그만 **블로그 블록**(이름 링크 + 최신 글 5개)으로 렌더링한다 (허브 #9 — 카드와 최신 글 섹션을 하나로 합침).
+  그 외 상태(planned 등)는 블록 자체를 만들지 않는다 — 빈 링크·"준비 중" 블록 금지(애드센스 심사 감점).
+- 각 live 블로그의 feed(Atom/RSS)를 **빌드 타임**에 읽어 최신 글 목록을 정적 HTML 로 넣는다. 요약문은 넣지 않는다(제목+날짜만, #9).
   런타임 JS 페치 없음 — 크롤러가 본문에서 그대로 읽는다.
 - 피드 조회·파싱 실패 시 빌드를 깨뜨리지 않는다: 경고만 남기고 그 블로그의 글 목록을 비운다(카드 링크는 유지).
 - data/banner.json enabled=true 일 때만 자기 제품 배너 1개를 렌더링한다.
@@ -31,7 +32,7 @@ UA = "Mozilla/5.0 (compatible; beolsseo-hub-build/1.0; +https://beolsseo.com)"
 # privacy 는 STATIC 복사가 아니라 렌더(HEAD_EXTRA 주입)로 처리한다 — 아래 build() 참조.
 STATIC = ["assets", "robots.txt", "sitemap.xml", "CNAME", ".nojekyll", "favicon.ico"]  # favicon.ico: scripts/favicon.py 산출물 (#6)
 ATOM = "{http://www.w3.org/2005/Atom}"
-SUMMARY_MAX = 110
+SUMMARY_MAX = 110  # shorten() 용 — 허브 목록에는 요약을 쓰지 않는다(#9). 다른 용도 대비 함수만 유지
 ADS_TXT_EXCHANGE = "f08c47fec0942fa0"  # Google AdSense 고정 relationship ID
 
 
@@ -169,43 +170,34 @@ def ads_txt(site: dict) -> str | None:
 
 # ---------- 렌더 ----------
 
-def render_card(b: dict) -> str:
-    return (
-        f'            <a class="card" href="{esc(b["url"])}" rel="noopener">\n'
-        f'              <span class="card-emoji" aria-hidden="true">{esc(b.get("emoji", ""))}</span>\n'
-        f'              <span class="card-body">\n'
-        f'                <span class="card-title">{esc(b["title"])}</span>\n'
-        f'                <span class="card-desc">{esc(b.get("desc", ""))}</span>\n'
-        f'              </span>\n'
-        f'            </a>'
-    )
-
-
-def render_recent(blog: dict, posts: list[dict]) -> str:
-    if not posts:
-        return ""
+def render_blog_block(b: dict, posts: list[dict]) -> str:
+    """블로그 하나 = 블록 하나 (허브 #9). 이름(사이트 링크) + 주제 한 줄 + 최신 글 목록(제목·날짜).
+    피드가 비면(조회 실패 포함) 목록만 비우고 블록·링크는 유지한다 — load_feed() 가 빌드를 깨뜨리지 않는 것과 짝."""
     lis = []
     for p in posts:
         d = p["date"].isoformat() if p["date"] else ""
         date_html = f'<time datetime="{d}">{d}</time>' if d else ""
-        summ = shorten(p["summary"]) if p["summary"] else ""
-        summ_html = f'\n              <p class="post-desc">{esc(summ)}</p>' if summ else ""
         lis.append(
-            f'            <li>\n'
-            f'              <a class="post-link" href="{esc(p["url"])}" rel="noopener">{esc(p["title"])}</a>\n'
-            f'              <p class="post-meta">{date_html}</p>{summ_html}\n'
-            f'            </li>'
+            f'            <li><a class="post-link" href="{esc(p["url"])}" rel="noopener">{esc(p["title"])}</a>{date_html}</li>'
         )
+    list_html = ("          <ul class=\"post-list\">\n" + "\n".join(lis) + "\n          </ul>\n") if lis else ""
     return (
-        f'      <section class="section recent">\n'
+        f'      <section class="blog-block" id="blog-{esc(b["id"])}">\n'
         f'        <div class="wrap">\n'
-        f'          <h2>{esc(blog["title"])} 최신 글</h2>\n'
-        f'          <ul class="post-list">\n' + "\n".join(lis) + "\n"
-        f'          </ul>\n'
-        f'          <p class="more"><a href="{esc(blog["url"])}" rel="noopener">{esc(blog["title"])} 전체 글 보기 →</a></p>\n'
-        f'        </div>\n'
+        f'          <h2 class="blog-title"><a href="{esc(b["url"])}" rel="noopener">'
+        f'<span class="blog-emoji" aria-hidden="true">{esc(b.get("emoji", ""))}</span>{esc(b["title"])}<span class="blog-arrow" aria-hidden="true"> →</span></a></h2>\n'
+        f'          <p class="blog-desc">{esc(b.get("desc", ""))}</p>\n'
+        + list_html
+        + f'        </div>\n'
         f'      </section>'
     )
+
+
+def render_meta_desc(live: list[dict]) -> str:
+    """검색 결과에 뜨는 문구 — 운영자 소개가 아니라 다루는 주제(#9). live 블로그 이름으로 만든다."""
+    names = [re.sub(r"\s*블로그$", "", b["title"]) for b in live]  # "개발 블로그" → "개발"
+    joined = " · ".join(names) if names else "주제별"
+    return esc(f"{joined} 블로그의 최신 글 모음. 각 블로그의 새 글을 한곳에서 봅니다.")
 
 
 def render_banner(banner: dict) -> str:
@@ -233,12 +225,11 @@ def _clean_blanks(out: str) -> str:
 def render_index(template: str, blogs: list[dict], feeds: dict[str, list[dict]], banner: dict,
                  year: int, head_extra: str = "") -> str:
     live = [b for b in blogs if b.get("status") == "live" and b.get("url")]
-    cards = "\n".join(render_card(b) for b in live)
-    recent = "\n".join(s for s in (render_recent(b, feeds.get(b["id"], [])) for b in live) if s)
+    blocks = "\n".join(render_blog_block(b, feeds.get(b["id"], [])) for b in live)
     out = template
     out = out.replace("{{HEAD_EXTRA}}", head_extra)
-    out = out.replace("{{CARDS}}", cards)
-    out = out.replace("{{RECENT}}", recent)
+    out = out.replace("{{META_DESC}}", render_meta_desc(live))
+    out = out.replace("{{BLOGS}}", blocks)
     out = out.replace("{{BANNER}}", render_banner(banner))
     out = out.replace("{{YEAR}}", str(year))
     return _clean_blanks(out)
@@ -298,7 +289,7 @@ def build(out_dir: Path, limit: int, offline: bool) -> Path:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(ROOT / "dist"))
-    ap.add_argument("--limit", type=int, default=8, help="블로그당 최신 글 수 (5~10 권장)")
+    ap.add_argument("--limit", type=int, default=5, help="블로그당 최신 글 수 (허브 #9: 5)")
     ap.add_argument("--offline", action="store_true", help="피드 조회 없이 빌드")
     a = ap.parse_args()
     build(Path(a.out), a.limit, a.offline)

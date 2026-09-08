@@ -2,7 +2,7 @@
   {
     "id": "dev",
     "title": "개발 블로그",
-    "desc": "웹·인프라·자동화 등 개발하며 배우고 부딪힌 것들을 기록합니다.",
+    "desc": "웹 개발 · 인프라 · 자동화 · 개발자 실무 정보",
     "url": "https://dev.beolsseo.com",
     "feed": "https://dev.beolsseo.com/feed.xml",
     "emoji": "💻",
@@ -11,7 +11,7 @@
   {
     "id": "life",
     "title": "생활정보 블로그",
-    "desc": "실생활 정보와 IT·가전 구매 팁을 공식 자료로 확인해 정리합니다.",
+    "desc": "생활 제도 · 안전 · 건강 정보 · IT·가전 구매",
     "url": "https://life.beolsseo.com",
     "feed": "https://life.beolsseo.com/feed.xml",
     "emoji": "🏠",

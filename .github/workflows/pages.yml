@@ -35,7 +35,7 @@ jobs:
         run: python3 -m unittest discover -s scripts -p 'test_*.py' -v
 
       - name: 빌드 (피드 → 정적 HTML)
-        run: python3 scripts/build.py --out dist --limit 8
+        run: python3 scripts/build.py --out dist --limit 5
 
       - name: 회사 정보 잔존 검사
         run: python3 scripts/check_forbidden.py dist
@@ -45,7 +45,7 @@ jobs:
           echo "## 허브 빌드" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           grep -c 'class="post-link"' dist/index.html | sed 's/^/최신 글 렌더링 수: /' >> "$GITHUB_STEP_SUMMARY" || true
-          grep -o '<a class="card" href="[^"]*"' dist/index.html >> "$GITHUB_STEP_SUMMARY" || true
+          grep -o '<h2 class="blog-title"><a href="[^"]*"' dist/index.html >> "$GITHUB_STEP_SUMMARY" || true
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/configure-pages@v5
